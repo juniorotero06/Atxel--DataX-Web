@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const User = require("../models/User");
+const Admin = require("../models/Admin");
 const bcrypt = require("bcrypt");
 const Joi = require("@hapi/joi");
 const jwt = require("jsonwebtoken");
@@ -28,20 +28,20 @@ router.post("/login", async (req, res) => {
     if (error) return res.status(400).json({ error: error.details[0].message });
   
     //Validando email
-    const user = await User.findOne({ email: req.body.email });
-    if (!user) return res.status(400).json({ error: "Usuario no encontrado" });
+    const admin = await Admin.findOne({ email: req.body.email });
+    if (!admin) return res.status(400).json({ error: "Usuario no encontrado" });
   
     //validando password
-    const validPassword = await bcrypt.compare(req.body.password, user.password);
+    const validPassword = await bcrypt.compare(req.body.password, admin.password);
     if (!validPassword)
       return res.status(400).json({ error: "Contraseña no válida" });
   
     // create token
     const token = jwt.sign(
       {
-        name: user.name,
-        lastname: user.lastname,
-        id: user._id,
+        name: admin.name,
+        lastname: admin.lastname,
+        id: admin._id,
       },
       process.env.TOKEN_SECRET,
       { expiresIn: "2h" }
@@ -55,14 +55,14 @@ router.post("/login", async (req, res) => {
 
   //Register
 router.post("/register", async (req, res) => {
-    // validate user
+    // validate admin
     const { error } = schemaRegister.validate(req.body);
   
     if (error) {
       return res.status(400).json({ error: error.details[0].message });
     }
     //Validadr si el email existe
-    const isEmailExist = await User.findOne({ email: req.body.email });
+    const isEmailExist = await Admin.findOne({ email: req.body.email });
     if (isEmailExist) {
       return res.status(400).json({ error: "Email ya registrado" });
     }
@@ -72,18 +72,17 @@ router.post("/register", async (req, res) => {
     const password = await bcrypt.hash(req.body.password, salt);
   
     //Creando el nuevo usario
-    const user = new User({
+    const admin = new Admin({
       name: req.body.name,
       lastname: req.body.lastname,
       email: req.body.email,
       password,
-      isAdmin: req.body.isAdmin,
     });
     try {
-      const savedUser = await user.save();
+      const savedAdmin = await admin.save();
       res.json({
         error: null,
-        data: savedUser,
+        data: savedAdmin,
       });
     } catch (error) {
       res.status(400).json({ error });
