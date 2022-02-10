@@ -4,6 +4,10 @@ const cors = require("cors");
 const PORT = process.env.PORT || 3001;
 require("dotenv").config();
 
+const authRoutes = require("./routes/auth");
+const dasboardRoutes = require("./routes/dashboard");
+const verifyToken = require("./middleware/validate-token");
+
 const app = express();
 require("./database-config");
 
@@ -25,6 +29,8 @@ app.use(
     })
 );
 
+app.use("/api/dashboard", verifyToken, dasboardRoutes);
+app.use("/api/user", authRoutes);
 
 app.listen(PORT, () => {
     console.log(`Servidor andando en ${PORT}`);
