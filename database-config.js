@@ -14,10 +14,20 @@ const User = UserModel(sequialize,Sequalize);
 const Rol = RolModel(sequialize, Sequalize);
 const License = LicenseModel(sequialize, Sequalize);
 
+
+//Asociasiones y claves foraneas
+User.belongsTo(Rol,{ foreingKey: "rolKey"});
+Rol.hasMany(User, { foreingKey: "rolKey"});
+
+User.belongsToMany(License, { through: "user_license" });
+License.belongsToMany(User, { through: "user_license" });
+
 sequialize.sync({ force: false }).then(() => {
     console.log("Base de datos conectada");
 })
 
 module.exports = {
-    User
+    User,
+    Rol,
+    License
 }
