@@ -8,20 +8,22 @@ module.exports = (sequelize, type) => {
           },
           name: {
             type: type.STRING,
+            allowNull: false,
             validate: {
               notEmpty: true,
             },
           },
           lastname: {
             type: type.STRING,
+            allowNull: false,
             validate: {
               notEmpty: true,
             },
           },
           password: {
             type: type.STRING,
+            allowNull: false,
             validate: {
-              isAlphanumeric: true,
               notEmpty: true,
             },
           },

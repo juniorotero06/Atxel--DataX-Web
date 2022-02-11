@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const Admin = require("../models/Admin");
+const Admin = require("../database-config").Admin;
 const bcrypt = require("bcrypt");
 const Joi = require("@hapi/joi");
 const jwt = require("jsonwebtoken");
@@ -72,7 +72,7 @@ router.post("/register", async (req, res) => {
   const password = await bcrypt.hash(req.body.password, salt);
 
   //Creando el nuevo usario
-  const admin = new Admin({
+  const admin = Admin.create({
     name: req.body.name,
     lastname: req.body.lastname,
     email: req.body.email,
@@ -92,16 +92,3 @@ router.post("/register", async (req, res) => {
 
 module.exports = router;
 
-// const schemaRegister = Joi.object({
-//     name: Joi.string().min(6).max(255).required(),
-//     lastname: Joi.string().min(6).max(255).required(),
-//     email: Joi.string().min(6).max(255).required().email(),
-//     password: Joi.string()
-//       .min(7)
-//       .max(1024)
-//       .required()
-//       .regex(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{7,1024}$/),
-//     activo: Joi.boolean().default(true),
-//     rolKey: Joi.number().required(),
-//     licenseAssociation: Joi.number().required()
-// });
