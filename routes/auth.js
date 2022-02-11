@@ -7,7 +7,7 @@ const jwt = require("jsonwebtoken");
 //esquema de validaciones
 const schemaLogin = Joi.object({
   email: Joi.string().min(6).max(255).required().email(),
-  password: Joi.string().min(7).max(1024).required(),
+  password: Joi.string().min(6).max(1024).required(),
 });
 
 const schemaRegister = Joi.object({
@@ -62,7 +62,9 @@ router.post("/register", async (req, res) => {
     return res.status(400).json({ error: error.details[0].message });
   }
   //Validadr si el email existe
-  const isEmailExist = await Admin.findOne({ where: { email: req.body.email } });
+  const isEmailExist = await Admin.findOne({
+    where: { email: req.body.email },
+  });
   if (isEmailExist) {
     return res.status(400).json({ error: "Email ya registrado" });
   }
@@ -91,4 +93,3 @@ router.post("/register", async (req, res) => {
 });
 
 module.exports = router;
-

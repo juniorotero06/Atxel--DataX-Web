@@ -15,26 +15,23 @@ app.use(bodyparser.urlencoded({ extended: false }));
 app.use(bodyparser.json());
 
 app.use(
-    cors({
-        origin: "*",
-        credentials: true,
-        methods: ["GET", "POST", "OPTIONS", "PUT", "DELETE"],
-        allowedHeaders: [
-            "Origin",
-            "X-Requested-With",
-            "Content-Type",
-            "Accept",
-            "authorization"
-        ]
-    })
+  cors({
+    origin: "*",
+    credentials: true,
+    methods: ["GET", "POST", "OPTIONS", "PUT", "DELETE"],
+    allowedHeaders: [
+      "Origin",
+      "X-Requested-With",
+      "Content-Type",
+      "Accept",
+      "authorization",
+    ],
+  })
 );
 
 app.use("/api/dashboard", verifyToken, dasboardRoutes);
 app.use("/api/user", authRoutes);
 
 app.listen(PORT, () => {
-    console.log(`Servidor andando en ${PORT}`);
-})
-
-
-
+  console.log(`Servidor andando en ${PORT}`);
+});
