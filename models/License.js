@@ -40,7 +40,7 @@ module.exports = (sequelize, type) => {
             type: type.BOOLEAN,
             allowNull: false
         },
-        server:{
+        host:{
             type: type.STRING,
             validate: {
                 isAlphanumeric: true,

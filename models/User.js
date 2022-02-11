@@ -37,20 +37,6 @@ module.exports = (sequelize, type) => {
                 isEmail: true,
                 notEmpty: true,
             }
-        },
-        rolKey: {
-           type: type.INTEGER,
-           allowNull: false,
-           validate: {
-            notEmpty: true,
-         }
-        },
-        licenseAssociation: {
-            type: type.INTEGER,
-            allowNull: false,
-            validate: {
-             notEmpty: true,
-         }
         }
     })
 }

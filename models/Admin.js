@@ -1,33 +1,39 @@
-const mongoose = require("mongoose");
+module.exports = (sequelize, type) => {
+    return sequelize.define('Admin', {
+        id: {
+            type: type.INTEGER,
+            primaryKey: true,
+            autoIncrement: true,
+            unique: true,
+          },
+          name: {
+            type: type.STRING,
+            validate: {
+              notEmpty: true,
+            },
+          },
+          lastname: {
+            type: type.STRING,
+            validate: {
+              notEmpty: true,
+            },
+          },
+          password: {
+            type: type.STRING,
+            validate: {
+              isAlphanumeric: true,
+              notEmpty: true,
+            },
+          },
+          email: {
+            type: type.STRING,
+            allowNull: false,
+            unique: true,
+            validate: {
+              isEmail: true,
+              notEmpty: true,
+            },
+          },
+    })
+}
 
-const adminSchema = mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
-    min: 6,
-    max: 255,
-  },
-  lastname: {
-    type: String,
-    required: true,
-    min: 6,
-    max: 255,
-  },
-  email: {
-    type: String,
-    required: true,
-    min: 6,
-    max: 255,
-  },
-  password: {
-    type: String,
-    required: true,
-    minlength: 7,
-  },
-  date: {
-    type: Date,
-    default: Date.now,
-  },
-});
-
-module.exports = mongoose.model("Admin", userSchema);
