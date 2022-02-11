@@ -1,5 +1,5 @@
 module.exports = (sequelize, type) => {
-  return sequelize.define("User", {
+  return sequelize.define("Admin", {
     id: {
       type: type.INTEGER,
       primaryKey: true,
@@ -8,25 +8,24 @@ module.exports = (sequelize, type) => {
     },
     name: {
       type: type.STRING,
+      allowNull: false,
       validate: {
         notEmpty: true,
       },
     },
     lastname: {
       type: type.STRING,
+      allowNull: false,
       validate: {
         notEmpty: true,
       },
     },
     password: {
       type: type.STRING,
+      allowNull: false,
       validate: {
         notEmpty: true,
       },
-    },
-    activo: {
-      type: type.BOOLEAN,
-      allowNull: false,
     },
     email: {
       type: type.STRING,
