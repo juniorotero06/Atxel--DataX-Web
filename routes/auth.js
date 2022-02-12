@@ -18,7 +18,7 @@ const schemaRegister = Joi.object({
     .min(6)
     .max(1024)
     .required()
-    .regex(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{7,1024}$/),
+    .regex(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{6,1024}$/),
 });
 
 //Login
