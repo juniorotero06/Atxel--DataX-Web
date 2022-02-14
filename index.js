@@ -5,7 +5,7 @@ const PORT = process.env.PORT || 3001;
 require("dotenv").config();
 
 const authRoutes = require("./routes/auth");
-const dasboardRoutes = require("./routes/dashboard");
+const Routes = require("./routes/routes");
 const verifyToken = require("./middleware/validate-token");
 
 const app = express();
@@ -29,8 +29,8 @@ app.use(
   })
 );
 
-app.use("/api/dashboard", verifyToken, dasboardRoutes);
-app.use("/api/user", authRoutes);
+app.use("/api/auth", authRoutes);
+app.use("/api", verifyToken, Routes);
 
 app.listen(PORT, () => {
   console.log(`Servidor andando en ${PORT}`);
