@@ -14,20 +14,12 @@ require("./database-config");
 app.use(bodyparser.urlencoded({ extended: false }));
 app.use(bodyparser.json());
 
-app.use(
-  cors({
-    origin: "*",
-    credentials: true,
-    methods: ["GET", "POST", "OPTIONS", "PUT", "DELETE"],
-    allowedHeaders: [
-      "Origin",
-      "X-Requested-With",
-      "Content-Type",
-      "Accept",
-      "authorization",
-    ],
-  })
-);
+var corsOptions = {
+  origin: '*', 
+  optionsSuccessStatus: 200 
+}
+app.use(cors(corsOptions));
+
 
 app.use("/api/auth", authRoutes);
 app.use("/api", verifyToken, Routes);
