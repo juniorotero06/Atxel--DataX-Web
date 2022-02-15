@@ -1,11 +1,11 @@
 const Sequelize = require("sequelize");
 require("dotenv").config();
 
-const UserModel = require("./models/User");
-const RolModel = require("./models/Rol");
-const LicenseModel = require("./models/License");
-const UserRolLicenseModel = require("./models/User_Rol_License");
-const AdminModel = require("./models/Admin");
+const UserModel = require("./database/models/User");
+const RolModel = require("./database/models/Rol");
+const LicenseModel = require("./database/models/License");
+const UserRolLicenseModel = require("./database/models/User_Rol_License");
+const AdminModel = require("./database/models/Admin");
 
 const sequelize = new Sequelize(
   process.env.DBNAME,
