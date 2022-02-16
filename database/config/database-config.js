@@ -23,10 +23,15 @@ const License = LicenseModel(sequelize, Sequelize);
 const UserRolLicense = UserRolLicenseModel(sequelize, Sequelize);
 const Admin = AdminModel(sequelize, Sequelize);
 
-//Asociasiones y claves foraneas
-User.hasMany(UserRolLicense, { foreingKey: "userId" });
-Rol.hasMany(UserRolLicense, { foreingKey: "rolId" });
-License.hasMany(UserRolLicense, { foreingKey: "licenseId" });
+//Asociasiones y one to many
+User.hasMany(UserRolLicense)
+UserRolLicense.belongsTo(User)
+
+Rol.hasMany(UserRolLicense)
+UserRolLicense.belongsTo(Rol)
+
+License.hasMany(UserRolLicense)
+UserRolLicense.belongsTo(License)
 
 sequelize.sync({ force: false }).then(() => {
   console.log("Base de datos conectada");
