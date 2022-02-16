@@ -1,13 +1,7 @@
 const router = require('express').Router();
 
-router.get('/', (req, res) => {
-    res.json({
-        error: null,
-        data: {
-            title: 'mi ruta protegida',
-            admin: req.admin
-        }
-    })
-})
+const UserController = require('../controllers/UserController');
+
+router.get('/', UserController.getUsers);
 
 module.exports = router;
