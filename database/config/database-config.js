@@ -23,16 +23,7 @@ const License = LicenseModel(sequelize, Sequelize);
 const UserRolLicense = UserRolLicenseModel(sequelize, Sequelize);
 const Admin = AdminModel(sequelize, Sequelize);
 
-//Asociasiones y claves foraneas
-// UserRolLicense.hasMany(User, { foreingKey: "UserId" })
-// User.belongsTo(UserRolLicense, { foreingKey: "UserId" });
-
-// UserRolLicense.hasMany(Rol, { foreingKey: "RolId" })
-// Rol.belongsTo(UserRolLicense, { foreingKey: "RolId" });
-
-// UserRolLicense.hasMany(License, { foreingKey: "LicId" })
-// License.belongsTo(UserRolLicense, { foreingKey: "LicId" });
-
+//Asociasiones y one to many
 User.hasMany(UserRolLicense)
 UserRolLicense.belongsTo(User)
 
