@@ -1,4 +1,4 @@
-const Admin = require("../database-config").Admin;
+const Admin = require("../../database/config/database-config").Admin;
 const bcrypt = require("bcrypt");
 const Joi = require("@hapi/joi");
 const jwt = require("jsonwebtoken");

@@ -9,7 +9,7 @@ const Routes = require("./routes/routes");
 const verifyToken = require("./middleware/validate-token");
 
 const app = express();
-require("./database-config");
+require("../database/config/database-config");
 
 app.use(bodyparser.urlencoded({ extended: false }));
 app.use(bodyparser.json());
