@@ -77,3 +77,15 @@ exports.createLicense = async ( req, res ) => {
     res.status(500).json({error});
   }
 }
+
+exports.getLicenseById = async ( req, res ) => {
+
+}
+
+exports.updateLicense = async ( req, res ) => {
+
+}
+
+exports.deleteLicense = async ( req, res ) => {
+
+}
