@@ -55,8 +55,8 @@ exports.createLicense = async ( req, res ) => {
     return res.status(400).json( { error: "Licensia ya registrado" } );
   }
 
-  const salt = bcrypt.genSalt(10);
-  const bdPass = bcrypt.hash(req.body.bdPass, salt);
+  const salt = await bcrypt.genSalt(10);
+  const bdPass = await bcrypt.hash(req.body.bdPass, salt);
 
   const license = License.create({
     companyName: req.body.companyName,
@@ -66,6 +66,7 @@ exports.createLicense = async ( req, res ) => {
     host: req.body.host,
     bdUser: req.body.bdUser,
     bdName: req.body.bdName,
+    activo: 1,
     bdPass
   });
   try {
@@ -79,13 +80,39 @@ exports.createLicense = async ( req, res ) => {
 }
 
 exports.getLicenseById = async ( req, res ) => {
-
+  let licenseId = req.params.id;
+  License.findOne({ where: { id: licenseId } }).then((license) =>{
+    res.json(license);
+  });
 }
 
 exports.updateLicense = async ( req, res ) => {
+  let licenseId = req.params.id;
 
+  const { error } = schemaLicense.validate(req.body);
+  if (error) {
+    return res.status(400).json( { error: error.details[0].message } );
+  }
+
+  const salt = await bcrypt.genSalt(10);
+  const password = await bcrypt.hash(req.body.password, salt);
+
+  let updateRegister = {
+    ...req.body,
+    password
+  };
+
+  License.findOne( { where: { id: licenseId } }).then((license) =>{
+    license.update(updateRegister).then((updateLicense) => {
+      res.json(updateLicense);
+    });
+  });
 }
 
 exports.deleteLicense = async ( req, res ) => {
+  let licenseId = req.params.id;
 
+  License.destroy({ where: { id: licenseId } }).then(()=>{
+    res.send('Licensia eliminada');
+  });
 }
