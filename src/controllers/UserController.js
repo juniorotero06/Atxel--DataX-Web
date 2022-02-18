@@ -6,7 +6,7 @@ const { equal } = require("@hapi/joi");
 const schemaUser = Joi.object({
   name: Joi.string().min(3).max(255).required(),
   lastname: Joi.string().min(3).max(255).required(),
-  email: Joi.string().min(6).max(255).required().email(),
+  email: Joi.string().min(3).max(255).required().email(),
   password: Joi.string()
     .min(6)
     .max(1024)
@@ -55,13 +55,14 @@ exports.createUser = async ( req, res ) => {
     return res.status(400).json( { error: "Usuario ya registrado" } );
   }
 
-  const salt = bcrypt.genSalt(10);
-  const password = bcrypt.hash(req.body.password, salt);
+  const salt = await bcrypt.genSalt(10);
+  const password = await bcrypt.hash(req.body.password, salt);
 
   const user = User.create({
     name: req.body.name,
     lastname: req.body.lastname,
     email: req.body.email,
+    activo: 1,
     password
   });
   try {
@@ -89,8 +90,8 @@ exports.updateUser = async ( req, res ) => {
     return res.status(400).json( { error: error.details[0].message } );
   }
 
-  const salt = bcrypt.genSalt(10);
-  const password = bcrypt.hash(req.body.password, salt);
+  const salt = await bcrypt.genSalt(10);
+  const password = await bcrypt.hash(req.body.password, salt);
 
   let updateRegister = {
     ...req.body,
