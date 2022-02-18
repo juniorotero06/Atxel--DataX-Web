@@ -1,7 +1,6 @@
 const User = require("../../database/config/database-config").User;
 const bcrypt = require("bcrypt");
 const Joi = require("@hapi/joi");
-const { equal } = require("@hapi/joi");
 
 const schemaUser = Joi.object({
   name: Joi.string().min(3).max(255).required(),
