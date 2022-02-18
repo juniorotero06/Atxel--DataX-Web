@@ -57,13 +57,34 @@ exports.createPivot = async ( req, res ) => {
 };
 
 exports.getPivotById = async ( req, res ) => {
+  let pivotId = req.params.id;
+  UserRolLicense.findOne({ where: { id: pivotId } }).then((pivot) =>{
+    res.json(pivot);
+  });
 
 }
 
 exports.updatePivot = async ( req, res ) => {
+  let pivotId = req.params.id;
 
+  const { error } = schemaPivot.validate(req.body);
+  if (error) {
+    return res.status(400).json( { error: error.details[0].message } );
+  }
+
+  let updateRegister = req.body;
+
+  UserRolLicense.findOne( { where: { id: pivotId } }).then((pivot) =>{
+    pivot.update(updateRegister).then((updatePivot) => {
+      res.json(updatePivot);
+    });
+  });
 }
 
 exports.deletePivot = async ( req, res ) => {
+  let pivotId = req.params.id;
 
+  UserRolLicense.destroy({ where: { id: pivotId } }).then(()=>{
+    res.send('Tabla pivote eliminada');
+  });
 }

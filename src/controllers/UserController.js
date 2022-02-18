@@ -1,6 +1,7 @@
 const User = require("../../database/config/database-config").User;
 const bcrypt = require("bcrypt");
 const Joi = require("@hapi/joi");
+const { equal } = require("@hapi/joi");
 
 const schemaUser = Joi.object({
   name: Joi.string().min(3).max(255).required(),
@@ -74,13 +75,39 @@ exports.createUser = async ( req, res ) => {
 };
 
 exports.getUserById = async ( req, res ) => {
-
+  let userId = req.params.id;
+  User.findOne({ where: { id: userId } }).then((user) =>{
+    res.json(user);
+  });
 }
 
 exports.updateUser = async ( req, res ) => {
+  let userId = req.params.id;
 
+  const { error } = schemaUser.validate(req.body);
+  if (error) {
+    return res.status(400).json( { error: error.details[0].message } );
+  }
+
+  const salt = bcrypt.genSalt(10);
+  const password = bcrypt.hash(req.body.password, salt);
+
+  let updateRegister = {
+    ...req.body,
+    password
+  };
+
+  User.findOne( { where: { id: userId } }).then((user) =>{
+    user.update(updateRegister).then((updateUser) => {
+      res.json(updateUser);
+    });
+  });
 }
 
 exports.deleteUser = async ( req, res ) => {
+  let userId = req.params.id;
 
+  User.destroy({ where: { id: userId } }).then(()=>{
+    res.send('Usuario eliminado');
+  });
 }

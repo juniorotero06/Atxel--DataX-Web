@@ -79,13 +79,39 @@ exports.createLicense = async ( req, res ) => {
 }
 
 exports.getLicenseById = async ( req, res ) => {
-
+  let licenseId = req.params.id;
+  License.findOne({ where: { id: licenseId } }).then((license) =>{
+    res.json(license);
+  });
 }
 
 exports.updateLicense = async ( req, res ) => {
+  let licenseId = req.params.id;
 
+  const { error } = schemaLicense.validate(req.body);
+  if (error) {
+    return res.status(400).json( { error: error.details[0].message } );
+  }
+
+  const salt = bcrypt.genSalt(10);
+  const password = bcrypt.hash(req.body.password, salt);
+
+  let updateRegister = {
+    ...req.body,
+    password
+  };
+
+  License.findOne( { where: { id: licenseId } }).then((license) =>{
+    license.update(updateRegister).then((updateLicense) => {
+      res.json(updateLicense);
+    });
+  });
 }
 
 exports.deleteLicense = async ( req, res ) => {
+  let licenseId = req.params.id;
 
+  License.destroy({ where: { id: licenseId } }).then(()=>{
+    res.send('Licensia eliminada');
+  });
 }
