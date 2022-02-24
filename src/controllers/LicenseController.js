@@ -6,7 +6,7 @@ const schemaLicense = Joi.object({
   companyName: Joi.string().min(3).max(255).required(),
   address: Joi.string().min(5).max(255).required(),
   email: Joi.string().min(6).max(255).required().email(),
-  phone: Joi.number().min(5).max(15).required(),
+  phone: Joi.string().min(5).max(255).required(),
   activo: Joi.boolean().default(1),
   host: Joi.string().min(5).max(255).required(),
   bdUser: Joi.string().min(5).max(255).required(),
@@ -48,7 +48,7 @@ exports.createLicense = async ( req, res ) => {
     return res.status(400).json( { error: error.details[0].message } );
   }
 
-  const isEmailExist = await User.findOne({
+  const isEmailExist = await License.findOne({
     where: { email: req.body.email }
   });
   if (isEmailExist) {

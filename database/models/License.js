@@ -28,12 +28,7 @@ module.exports = (sequelize, type) => {
       },
     },
     phone: {
-      type: type.INTEGER,
-      validate: {
-        isNumeric: true,
-        min: 5,
-        max: 15,
-      },
+      type: type.STRING,
     },
     activo: {
       type: type.BOOLEAN,
