@@ -1,11 +1,4 @@
 const UserRolLicense = require("../../database/config/database-config").UserRolLicense;
-const Joi = require("@hapi/joi");
-
-const schemaPivot = Joi.object({
-  UserId: Joi.number().required(),
-  RolId: Joi.number().required(),
-  LicenseId: Joi.number().required()
-});
 
 exports.getPivotTable = async ( req, res) => {
     const pageAsNumber = Number.parseInt(req.query.page);
@@ -36,15 +29,14 @@ exports.getPivotTable = async ( req, res) => {
 }
 
 exports.createPivot = async ( req, res ) => {
-  const { error } = schemaPivot.validate(req.body);
-  if (error) {
-    return res.status(400).json( { error: error.details[0].message } );
-  }
+    const UserId = await Number.parseInt(req.body.UserId);
+    const RolId = await Number.parseInt(req.body.RolId);
+    const LicenseId = await Number.parseInt(req.body.LicenseId);
 
   const pivotTable = UserRolLicense.create({
-    UserId: req.body.UserId,
-    RolId: req.body.RolId,
-    LicenseId: req.body.LicenseId
+    UserId,
+    RolId,
+    LicenseId
   });
   try {
     const savedPivot = await pivotTable.save();
@@ -66,12 +58,6 @@ exports.getPivotById = async ( req, res ) => {
 
 exports.updatePivot = async ( req, res ) => {
   let pivotId = req.params.id;
-
-  const { error } = schemaPivot.validate(req.body);
-  if (error) {
-    return res.status(400).json( { error: error.details[0].message } );
-  }
-
   let updateRegister = req.body;
 
   UserRolLicense.findOne( { where: { id: pivotId } }).then((pivot) =>{

@@ -20,7 +20,7 @@ router.get('/rols', RolController.getRols);
 //Metodos Post
 router.post('/users/store', UserController.createUser);
 router.post('/licenses/store', LicenseController.createLicense);
-router.post('pivot/store', PivotTableController.createPivot)
+router.post('/pivot/store', PivotTableController.createPivot)
 
 //Metodos Put
 router.put('/users/:id', UserController.updateUser);
