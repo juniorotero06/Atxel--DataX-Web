@@ -6,11 +6,8 @@ const schemaUser = Joi.object({
   name: Joi.string().min(3).max(255).required(),
   lastname: Joi.string().min(3).max(255).required(),
   email: Joi.string().min(3).max(255).required().email(),
-  password: Joi.string()
-    .min(6)
-    .max(1024)
-    .required(),
-  activo: Joi.boolean().default(1)
+  password: Joi.string().min(6).max(1024).required(),
+  activo: Joi.boolean().default(1),
 });
 
 exports.getUsers = async (req, res) => {
@@ -41,17 +38,17 @@ exports.getUsers = async (req, res) => {
   });
 };
 
-exports.createUser = async ( req, res ) => {
+exports.createUser = async (req, res) => {
   const { error } = schemaUser.validate(req.body);
   if (error) {
-    return res.status(400).json( { error: error.details[0].message } );
+    return res.status(400).json({ error: error.details[0].message });
   }
 
   const isEmailExist = await User.findOne({
-    where: { email: req.body.email }
+    where: { email: req.body.email },
   });
   if (isEmailExist) {
-    return res.status(400).json( { error: "Usuario ya registrado" } );
+    return res.status(400).json({ error: "Usuario ya registrado" });
   }
 
   const salt = await bcrypt.genSalt(10);
@@ -62,52 +59,40 @@ exports.createUser = async ( req, res ) => {
     lastname: req.body.lastname,
     email: req.body.email,
     activo: 1,
-    password
+    password,
   });
   try {
     const savedUser = await user.save();
     res.json({
-      data: savedUser
+      data: savedUser,
     });
   } catch (error) {
-    res.status(500).json({error});
+    res.status(500).json({ error });
   }
 };
 
-exports.getUserById = async ( req, res ) => {
+exports.getUserById = async (req, res) => {
   let userId = req.params.id;
-  User.findOne({ where: { id: userId } }).then((user) =>{
+  User.findOne({ where: { id: userId } }).then((user) => {
     res.json(user);
   });
-}
+};
 
-exports.updateUser = async ( req, res ) => {
+exports.updateUser = async (req, res) => {
   let userId = req.params.id;
+  let updateRegister = req.body;
 
-  const { error } = schemaUser.validate(req.body);
-  if (error) {
-    return res.status(400).json( { error: error.details[0].message } );
-  }
-
-  const salt = await bcrypt.genSalt(10);
-  const password = await bcrypt.hash(req.body.password, salt);
-
-  let updateRegister = {
-    ...req.body,
-    password
-  };
-
-  User.findOne( { where: { id: userId } }).then((user) =>{
+  User.findOne({ where: { id: userId } }).then((user) => {
     user.update(updateRegister).then((updateUser) => {
       res.json(updateUser);
     });
   });
-}
+};
 
-exports.deleteUser = async ( req, res ) => {
+exports.deleteUser = async (req, res) => {
   let userId = req.params.id;
 
-  User.destroy({ where: { id: userId } }).then(()=>{
-    res.send('Usuario eliminado');
+  User.destroy({ where: { id: userId } }).then(() => {
+    res.send("Usuario eliminado");
   });
-}
+};
