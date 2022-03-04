@@ -1,4 +1,5 @@
 const License = require("../../database/config/database-config").License;
+const { Op } = require("sequelize");
 const bcrypt = require("bcrypt");
 const Joi = require("@hapi/joi");
 
@@ -102,5 +103,26 @@ exports.deleteLicense = async (req, res) => {
 
   License.destroy({ where: { id: licenseId } }).then(() => {
     res.send("Licensia eliminada");
+  });
+};
+
+exports.searchLicense = async (req, res) => {
+  let { search } = req.query;
+
+  License.findAll({
+    where: {
+      [Op.or]: {
+        id: { [Op.like]: search },
+        companyName: { [Op.like]: search },
+        address: { [Op.like]: search },
+        email: { [Op.like]: search },
+        phone: { [Op.like]: search },
+        host: { [Op.like]: search },
+        bdUser: { [Op.like]: search },
+        bdName: { [Op.like]: search },
+      },
+    },
+  }).then((license) => {
+    res.send({ content: license });
   });
 };

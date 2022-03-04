@@ -48,6 +48,8 @@ exports.login = async (req, res) => {
   try {
     res.header("auth-token", token).json({
       data: { token },
+      name: admin.name,
+      lastname: admin.lastname,
     });
   } catch (error) {
     res.status(500).json({ error });
