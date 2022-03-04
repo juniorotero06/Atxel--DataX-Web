@@ -98,6 +98,16 @@ exports.deleteUser = async (req, res) => {
   });
 };
 
+exports.desactiveUser = async (req, res) => {
+  let userId = req.params.id;
+
+  User.findOne({ where: { id: userId } }).then((user) => {
+    user.update({ activo: 0 }).then((updateUser) => {
+      res.json(updateUser);
+    });
+  });
+};
+
 exports.searchUser = async (req, res) => {
   let { search } = req.query;
 

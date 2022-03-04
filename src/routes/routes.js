@@ -36,7 +36,11 @@ router.put("/pivot/:id", PivotTableController.updatePivot);
 
 //Metodos Delete
 router.delete("/users/:id", UserController.deleteUser);
+router.delete("/users/desactive/:id", UserController.desactiveUser);
+
 router.delete("/licenses/:id", LicenseController.deleteLicense);
+router.delete("/license/desactive/:id", LicenseController.desactiveLicense);
+
 router.delete("/pivot/:id", PivotTableController.deletePivot);
 
 module.exports = router;

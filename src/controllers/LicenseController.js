@@ -106,6 +106,16 @@ exports.deleteLicense = async (req, res) => {
   });
 };
 
+exports.desactiveLicense = async (req, res) => {
+  let licenseId = req.params.id;
+
+  License.findOne({ where: { id: licenseId } }).then((license) => {
+    license.update({ activo: 0 }).then((updateLic) => {
+      res.json(updateLic);
+    });
+  });
+};
+
 exports.searchLicense = async (req, res) => {
   let { search } = req.query;
 
