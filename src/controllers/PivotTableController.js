@@ -79,7 +79,7 @@ exports.deletePivot = async (req, res) => {
 exports.searchPivot = async (req, res) => {
   let { search } = req.query;
 
-  User.findAll({
+  UserRolLicense.findAll({
     where: {
       [Op.or]: {
         id: { [Op.like]: search },

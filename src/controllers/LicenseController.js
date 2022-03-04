@@ -109,7 +109,7 @@ exports.deleteLicense = async (req, res) => {
 exports.searchLicense = async (req, res) => {
   let { search } = req.query;
 
-  User.findAll({
+  License.findAll({
     where: {
       [Op.or]: {
         id: { [Op.like]: search },
