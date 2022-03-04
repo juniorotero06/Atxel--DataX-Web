@@ -1,4 +1,5 @@
 const User = require("../../database/config/database-config").User;
+const { Op } = require("sequelize");
 const bcrypt = require("bcrypt");
 const Joi = require("@hapi/joi");
 
@@ -94,5 +95,22 @@ exports.deleteUser = async (req, res) => {
 
   User.destroy({ where: { id: userId } }).then(() => {
     res.send("Usuario eliminado");
+  });
+};
+
+exports.searchUser = async (req, res) => {
+  let { search } = req.query;
+
+  User.findAll({
+    where: {
+      [Op.or]: {
+        id: { [Op.like]: search },
+        name: { [Op.like]: search },
+        lastname: { [Op.like]: search },
+        email: { [Op.like]: search },
+      },
+    },
+  }).then((user) => {
+    res.send({ content: user });
   });
 };
