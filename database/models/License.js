@@ -12,6 +12,12 @@ module.exports = (sequelize, type) => {
         notEmpty: true,
       },
     },
+    licenseId: {
+      type: type.STRING,
+      validate: {
+        notEmpty: true,
+      },
+    },
     address: {
       type: type.STRING,
       validate: {
