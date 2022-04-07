@@ -6,6 +6,7 @@ const Joi = require("@hapi/joi");
 const schemaUser = Joi.object({
   name: Joi.string().min(3).max(255).required(),
   lastname: Joi.string().min(3).max(255).required(),
+  phone: Joi.string().max(10).required(),
   email: Joi.string().min(3).max(255).required().email(),
   password: Joi.string().min(6).max(1024).required(),
   activo: Joi.boolean().default(1),
@@ -58,6 +59,7 @@ exports.createUser = async (req, res) => {
   const user = User.create({
     name: req.body.name,
     lastname: req.body.lastname,
+    phone: req.body.phone,
     email: req.body.email,
     activo: 1,
     password,

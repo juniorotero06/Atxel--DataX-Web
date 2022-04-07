@@ -5,6 +5,7 @@ const Joi = require("@hapi/joi");
 
 const schemaLicense = Joi.object({
   companyName: Joi.string().min(3).max(255).required(),
+  licenseId: Joi.string().max(10).required(),
   address: Joi.string().min(5).max(255).required(),
   email: Joi.string().min(6).max(255).required().email(),
   phone: Joi.string().min(5).max(255).required(),
@@ -61,6 +62,7 @@ exports.createLicense = async (req, res) => {
 
   const license = License.create({
     companyName: req.body.companyName,
+    licenseId: req.body.licenseId,
     address: req.body.address,
     email: req.body.email,
     phone: req.body.phone,

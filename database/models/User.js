@@ -24,6 +24,12 @@ module.exports = (sequelize, type) => {
         notEmpty: true,
       },
     },
+    phone: {
+      type: type.STRING,
+      validate: {
+        notEmpty: true,
+      },
+    },
     activo: {
       type: type.BOOLEAN,
       allowNull: false,
