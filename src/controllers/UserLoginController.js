@@ -1,4 +1,8 @@
 const User = require("../../database/config/database-config").User;
+const UserRolLicense =
+  require("../../database/config/database-config").UserRolLicense;
+const Rol = require("../../database/config/database-config").Rol;
+const License = require("../../database/config/database-config").License;
 const bcrypt = require("bcrypt");
 const Joi = require("@hapi/joi");
 const jwt = require("jsonwebtoken");
@@ -18,6 +22,12 @@ exports.login = async (req, res) => {
   });
   if (!user) return res.status(400).json({ error: "Usuario no encontrado" });
 
+  const pivot = await UserRolLicense.findOne({ where: { userId: user.id } });
+
+  const license = await License.findOne({ where: { id: pivot.LicenseId } });
+
+  const rol = await Rol.findOne({ where: { id: pivot.RolId } });
+
   const validPassword = await bcrypt.compare(req.body.password, user.password);
   if (!validPassword)
     return res.status(400).json({ error: "Contraseña no válida" });
@@ -26,7 +36,7 @@ exports.login = async (req, res) => {
     {
       name: user.name,
       lastname: user.lastname,
-      id: user._id,
+      id: user.id,
     },
     process.env.TOKEN_SECRET,
     { expiresIn: "2h" }
@@ -37,6 +47,10 @@ exports.login = async (req, res) => {
       data: { token },
       name: user.name,
       lastname: user.lastname,
+      rolId: rol.id,
+      rolName: rol.rolName,
+      licenseId: license.id,
+      codLicense: license.licenseId,
     });
   } catch (error) {
     res.status(500).json({ error });

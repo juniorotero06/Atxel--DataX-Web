@@ -5,6 +5,7 @@ const LicenseController = require("../controllers/LicenseController");
 const PivotTableController = require("../controllers/PivotTableController");
 const RolController = require("../controllers/RolController");
 const AdminController = require("../controllers/AdminController");
+const AdminRoleController = require("../controllers/AdminRoleController");
 
 //Metodos Get
 router.get("/users", UserController.getUsers);
@@ -28,6 +29,8 @@ router.post("/users/store", UserController.createUser);
 
 router.post("/licenses/store", LicenseController.createLicense);
 router.post("/pivot/store", PivotTableController.createPivot);
+
+router.post("/admin_regiter_user", AdminRoleController.adminRegisterToUser);
 
 //Metodos Put
 router.put("/users/:id", UserController.updateUser);
