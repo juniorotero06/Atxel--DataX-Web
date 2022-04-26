@@ -37,6 +37,9 @@ router.put("/users/:id", UserController.updateUser);
 router.put("/licenses/:id", LicenseController.updateLicense);
 router.put("/pivot/:id", PivotTableController.updatePivot);
 
+router.put("/admin/change_pass", AdminRoleController.changePasswordAdmin);
+router.put("/admin/change_role", AdminRoleController.changeRoleToUser);
+
 //Metodos Delete
 router.delete("/users/:id", UserController.deleteUser);
 router.delete("/users/desactive/:id", UserController.desactiveUser);

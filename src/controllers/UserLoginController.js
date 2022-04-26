@@ -48,6 +48,7 @@ exports.login = async (req, res) => {
       data: { token },
       name: user.name,
       lastname: user.lastname,
+      email: user.email,
       rolId: rol.id,
       rolName: rol.rolName,
       licenseId: license.id,
