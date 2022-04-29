@@ -24,17 +24,17 @@ const UserRolLicense = UserRolLicenseModel(sequelize, Sequelize);
 const Admin = AdminModel(sequelize, Sequelize);
 
 //Asociasiones y one to many
-User.hasMany(UserRolLicense)
-UserRolLicense.belongsTo(User)
+User.hasMany(UserRolLicense);
+UserRolLicense.belongsTo(User);
 
-Rol.hasMany(UserRolLicense)
-UserRolLicense.belongsTo(Rol)
+Rol.hasMany(UserRolLicense);
+UserRolLicense.belongsTo(Rol);
 
-License.hasMany(UserRolLicense)
-UserRolLicense.belongsTo(License)
+License.hasMany(UserRolLicense);
+UserRolLicense.belongsTo(License);
 
 sequelize.sync({ force: false }).then(() => {
-  console.log("Base de datos conectada");
+  console.log("Base de datos atxel conectada");
 });
 
 module.exports = {

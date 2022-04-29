@@ -7,6 +7,8 @@ const RolController = require("../controllers/RolController");
 const AdminController = require("../controllers/AdminController");
 const AdminRoleController = require("../controllers/AdminRoleController");
 
+const CheckBalanceController = require("../controllers/CheckBalanceController");
+
 //Metodos Get
 router.get("/users", UserController.getUsers);
 router.get("/users/:id", UserController.getUserById);
@@ -23,6 +25,8 @@ router.get("/userrollic", PivotTableController.searchPivot);
 router.get("/rols", RolController.getRols);
 
 router.get("/admins/:id", AdminController.getAdminById);
+
+router.get("/balance", CheckBalanceController.getBalance);
 
 //Metodos Post
 router.post("/users/store", UserController.createUser);

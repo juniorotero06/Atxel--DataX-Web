@@ -10,6 +10,7 @@ const verifyToken = require("./middleware/validate-token");
 
 const app = express();
 require("../database/config/database-config");
+require("../database/config/datax-store-config");
 
 app.use(bodyparser.urlencoded({ extended: false }));
 app.use(bodyparser.json());
