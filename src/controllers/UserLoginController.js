@@ -20,7 +20,8 @@ exports.login = async (req, res) => {
   const user = await User.findOne({
     where: { email: req.body.email, activo: 1 },
   });
-  if (!user) return res.status(400).json({ error: "Usuario no encontrado" });
+  if (!user)
+    return res.status(400).json({ error: "Usuario y/o Contraseña no válida" });
 
   const pivot = await UserRolLicense.findOne({ where: { userId: user.id } });
 
@@ -30,7 +31,7 @@ exports.login = async (req, res) => {
 
   const validPassword = await bcrypt.compare(req.body.password, user.password);
   if (!validPassword)
-    return res.status(400).json({ error: "Contraseña no válida" });
+    return res.status(400).json({ error: "Usuario y/o Contraseña no válida." });
 
   const token = jwt.sign(
     {
@@ -47,6 +48,7 @@ exports.login = async (req, res) => {
       data: { token },
       name: user.name,
       lastname: user.lastname,
+      email: user.email,
       rolId: rol.id,
       rolName: rol.rolName,
       licenseId: license.id,
