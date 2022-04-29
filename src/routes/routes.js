@@ -26,7 +26,11 @@ router.get("/rols", RolController.getRols);
 
 router.get("/admins/:id", AdminController.getAdminById);
 
-router.get("/balance", CheckBalanceController.getBalance);
+router.get("/balance_bodega", CheckBalanceController.getBalanceByBodega);
+router.get("/balance_codsaldo", CheckBalanceController.getBalanceByCodSaldo);
+router.get("/balance_linea", CheckBalanceController.getBalanceByLinea);
+router.get("/balance_producto", CheckBalanceController.getBalanceByNomProducto);
+router.get("/balance_saldo", CheckBalanceController.getBalanceBySaldo);
 
 //Metodos Post
 router.post("/users/store", UserController.createUser);
