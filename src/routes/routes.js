@@ -26,12 +26,6 @@ router.get("/rols", RolController.getRols);
 
 router.get("/admins/:id", AdminController.getAdminById);
 
-router.get("/balance_bodega", CheckBalanceController.getBalanceByBodega);
-router.get("/balance_codsaldo", CheckBalanceController.getBalanceByCodSaldo);
-router.get("/balance_linea", CheckBalanceController.getBalanceByLinea);
-router.get("/balance_producto", CheckBalanceController.getBalanceByNomProducto);
-router.get("/balance_saldo", CheckBalanceController.getBalanceBySaldo);
-
 //Metodos Post
 router.post("/users/store", UserController.createUser);
 
@@ -39,6 +33,15 @@ router.post("/licenses/store", LicenseController.createLicense);
 router.post("/pivot/store", PivotTableController.createPivot);
 
 router.post("/admin_regiter_user", AdminRoleController.adminRegisterToUser);
+
+router.post("/balance_bodega", CheckBalanceController.getBalanceByBodega);
+router.post("/balance_codsaldo", CheckBalanceController.getBalanceByCodSaldo);
+router.post("/balance_linea", CheckBalanceController.getBalanceByLinea);
+router.post(
+  "/balance_producto",
+  CheckBalanceController.getBalanceByNomProducto
+);
+router.post("/balance_saldo", CheckBalanceController.getBalanceBySaldo);
 
 //Metodos Put
 router.put("/users/:id", UserController.updateUser);

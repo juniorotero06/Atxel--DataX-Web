@@ -38,13 +38,17 @@ exports.getBalanceByBodega = async (req, res) => {
     `SELECT a.des_bod, b.cod_sdo, c.descrip, b.actual_sdo, d.des_linea FROM insaldo as b JOIN inbodega as a JOIN initem as c on c.cod_item = b.cod_sdo JOIN inlinea as d on c.itm_linea = d.cod_linea WHERE b.bod_sdo = ${bodega.cod_bod} ORDER BY b.cod_sdo ASC`
   );
 
-  res.send({
-    results: {
-      content: results,
-      totalData: totalResults.length,
-      totalPages: Math.ceil(totalResults.length / Number.parseInt(size)),
-    },
-  });
+  try {
+    res.json({
+      results: {
+        content: results,
+        totalData: totalResults.length,
+        totalPages: Math.ceil(totalResults.length / Number.parseInt(size)),
+      },
+    });
+  } catch (error) {
+    res.status(500).json({ error });
+  }
 };
 
 // TODO Buscar por Código del saldo, Nombre del producto, Linea, Saldos <0 || =0 || >0
@@ -81,13 +85,17 @@ exports.getBalanceByCodSaldo = async (req, res) => {
     `SELECT a.des_bod, b.cod_sdo, c.descrip, b.actual_sdo, d.des_linea FROM insaldo as b JOIN inbodega as a JOIN initem as c on c.cod_item = b.cod_sdo JOIN inlinea as d on c.itm_linea = d.cod_linea WHERE b.cod_sdo = ${codSaldo.cod_sdo} ORDER BY b.cod_sdo ASC`
   );
 
-  res.send({
-    results: {
-      content: results,
-      totalData: totalResults.length,
-      totalPages: Math.ceil(totalResults.length / Number.parseInt(size)),
-    },
-  });
+  try {
+    res.json({
+      results: {
+        content: results,
+        totalData: totalResults.length,
+        totalPages: Math.ceil(totalResults.length / Number.parseInt(size)),
+      },
+    });
+  } catch (error) {
+    res.status(500).json({ error });
+  }
 };
 
 exports.getBalanceByNomProducto = async (req, res) => {
@@ -115,22 +123,26 @@ exports.getBalanceByNomProducto = async (req, res) => {
     return res.status(400).json({ error: "Producto no encontrado" });
 
   const [results] = await connection.query(
-    `SELECT a.des_bod, b.cod_sdo, c.descrip, b.actual_sdo, d.des_linea FROM insaldo as b JOIN inbodega as a JOIN initem as c on c.cod_item = b.cod_sdo JOIN inlinea as d on c.itm_linea = d.cod_linea WHERE c.descrip = ${
+    `SELECT a.des_bod, b.cod_sdo, c.descrip, b.actual_sdo, d.des_linea FROM insaldo as b JOIN inbodega as a JOIN initem as c on c.cod_item = b.cod_sdo JOIN inlinea as d on c.itm_linea = d.cod_linea WHERE c.descrip = "${
       producto.descrip
-    } ORDER BY b.cod_sdo ASC LIMIT ${size} OFFSET ${page * size}`
+    }" ORDER BY b.cod_sdo ASC LIMIT ${size} OFFSET ${page * size}`
   );
 
   const [totalResults] = await connection.query(
-    `SELECT a.des_bod, b.cod_sdo, c.descrip, b.actual_sdo, d.des_linea FROM insaldo as b JOIN inbodega as a JOIN initem as c on c.cod_item = b.cod_sdo JOIN inlinea as d on c.itm_linea = d.cod_linea WHERE c.descrip = ${producto.descrip} ORDER BY b.cod_sdo ASC`
+    `SELECT a.des_bod, b.cod_sdo, c.descrip, b.actual_sdo, d.des_linea FROM insaldo as b JOIN inbodega as a JOIN initem as c on c.cod_item = b.cod_sdo JOIN inlinea as d on c.itm_linea = d.cod_linea WHERE c.descrip = "${producto.descrip}" ORDER BY b.cod_sdo ASC`
   );
 
-  res.send({
-    results: {
-      content: results,
-      totalData: totalResults.length,
-      totalPages: Math.ceil(totalResults.length / Number.parseInt(size)),
-    },
-  });
+  try {
+    res.json({
+      results: {
+        content: results,
+        totalData: totalResults.length,
+        totalPages: Math.ceil(totalResults.length / Number.parseInt(size)),
+      },
+    });
+  } catch (error) {
+    res.status(500).json({ error });
+  }
 };
 
 exports.getBalanceByLinea = async (req, res) => {
@@ -157,22 +169,26 @@ exports.getBalanceByLinea = async (req, res) => {
   if (!linea) return res.status(400).json({ error: "Línea no encontrada" });
 
   const [results] = await connection.query(
-    `SELECT a.des_bod, b.cod_sdo, c.descrip, b.actual_sdo, d.des_linea FROM insaldo as b JOIN inbodega as a JOIN initem as c on c.cod_item = b.cod_sdo JOIN inlinea as d on c.itm_linea = d.cod_linea WHERE d.des_linea = ${
+    `SELECT a.des_bod, b.cod_sdo, c.descrip, b.actual_sdo, d.des_linea FROM insaldo as b JOIN inbodega as a JOIN initem as c on c.cod_item = b.cod_sdo JOIN inlinea as d on c.itm_linea = d.cod_linea WHERE d.des_linea = "${
       linea.des_linea
-    } ORDER BY b.cod_sdo ASC LIMIT ${size} OFFSET ${page * size}`
+    }" ORDER BY b.cod_sdo ASC LIMIT ${size} OFFSET ${page * size}`
   );
 
   const [totalResults] = await connection.query(
-    `SELECT a.des_bod, b.cod_sdo, c.descrip, b.actual_sdo, d.des_linea FROM insaldo as b JOIN inbodega as a JOIN initem as c on c.cod_item = b.cod_sdo JOIN inlinea as d on c.itm_linea = d.cod_linea WHERE d.des_linea = ${linea.des_linea} ORDER BY b.cod_sdo ASC`
+    `SELECT a.des_bod, b.cod_sdo, c.descrip, b.actual_sdo, d.des_linea FROM insaldo as b JOIN inbodega as a JOIN initem as c on c.cod_item = b.cod_sdo JOIN inlinea as d on c.itm_linea = d.cod_linea WHERE d.des_linea = "${linea.des_linea}" ORDER BY b.cod_sdo ASC`
   );
 
-  res.send({
-    results: {
-      content: results,
-      totalData: totalResults.length,
-      totalPages: Math.ceil(totalResults.length / Number.parseInt(size)),
-    },
-  });
+  try {
+    res.json({
+      results: {
+        content: results,
+        totalData: totalResults.length,
+        totalPages: Math.ceil(totalResults.length / Number.parseInt(size)),
+      },
+    });
+  } catch (error) {
+    res.status(500).json({ error });
+  }
 };
 
 exports.getBalanceBySaldo = async (req, res) => {
@@ -205,11 +221,15 @@ exports.getBalanceBySaldo = async (req, res) => {
     `SELECT a.des_bod, b.cod_sdo, c.descrip, b.actual_sdo, d.des_linea FROM insaldo as b JOIN inbodega as a JOIN initem as c on c.cod_item = b.cod_sdo JOIN inlinea as d on c.itm_linea = d.cod_linea WHERE b.actual_sdo ${operator} 0 ORDER BY b.cod_sdo ASC`
   );
 
-  res.send({
-    results: {
-      content: results,
-      totalData: totalResults.length,
-      totalPages: Math.ceil(totalResults.length / Number.parseInt(size)),
-    },
-  });
+  try {
+    res.json({
+      results: {
+        content: results,
+        totalData: totalResults.length,
+        totalPages: Math.ceil(totalResults.length / Number.parseInt(size)),
+      },
+    });
+  } catch (error) {
+    res.status(500).json({ error });
+  }
 };
