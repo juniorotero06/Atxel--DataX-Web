@@ -5,6 +5,7 @@ const InItemModel = require("../datax-store-models/InItem");
 const InBodegaModel = require("../datax-store-models/InBodega");
 const InLineaModel = require("../datax-store-models/InLinea");
 const InSaldoModel = require("../datax-store-models/InSaldo");
+const InGrupoModel = require("../datax-store-models/InGrupo");
 
 const connection = new Sequelize(
   process.env.DATXSTRDB,
@@ -24,6 +25,7 @@ const InItem = InItemModel(connection, Sequelize);
 const InBodega = InBodegaModel(connection, Sequelize);
 const InLinea = InLineaModel(connection, Sequelize);
 const InSaldo = InSaldoModel(connection, Sequelize);
+const InGrupo = InGrupoModel(connection, Sequelize);
 
 connection.sync({ force: false }).then(() => {
   console.log("Base de datos datax store conectada");
@@ -34,5 +36,6 @@ module.exports = {
   InBodega,
   InLinea,
   InSaldo,
+  InGrupo,
   connection,
 };
