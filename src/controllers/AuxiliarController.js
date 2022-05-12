@@ -7,7 +7,7 @@ exports.getBodegas = async (req, res) => {
     attributes: ["cod_bod", "des_bod"],
   });
   try {
-    res.json(bodegas);
+    res.json({ results: bodegas });
   } catch (error) {
     res.status(500).json({ error });
   }
@@ -18,7 +18,7 @@ exports.getLineas = async (req, res) => {
     attributes: ["cod_linea", "des_linea"],
   });
   try {
-    res.json(lineas);
+    res.json({ results: lineas });
   } catch (error) {
     res.status(500).json({ error });
   }
@@ -29,7 +29,7 @@ exports.getGrupo = async (req, res) => {
     attributes: ["tipo_gru", "codigo_gru", "desc_gru"],
   });
   try {
-    res.json(grupos);
+    res.json({ results: grupos });
   } catch (error) {
     res.status(500).json({ error });
   }
