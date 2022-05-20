@@ -49,6 +49,8 @@ router.post(
 );
 router.post("/balance_saldo", CheckBalanceController.getBalanceBySaldo);
 
+router.post("/balance_filters", CheckBalanceController.getBalancebyFilters);
+
 //Metodos Put
 router.put("/users/:id", UserController.updateUser);
 router.put("/licenses/:id", LicenseController.updateLicense);
