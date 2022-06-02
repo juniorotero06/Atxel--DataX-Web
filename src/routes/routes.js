@@ -8,6 +8,7 @@ const AdminController = require("../controllers/AdminController");
 const AdminRoleController = require("../controllers/AdminRoleController");
 
 const CheckBalanceController = require("../controllers/CheckBalanceController");
+const CarteraController = require("../controllers/CarteraController");
 
 const AuxiliarController = require("../controllers/AuxiliarController");
 
@@ -50,6 +51,8 @@ router.post(
 router.post("/balance_saldo", CheckBalanceController.getBalanceBySaldo);
 
 router.post("/balance_filters", CheckBalanceController.getBalancebyFilters);
+
+router.post("/cartera_cxc_cxp", CarteraController.getSaldos_CXC_CXP);
 
 //Metodos Put
 router.put("/users/:id", UserController.updateUser);
