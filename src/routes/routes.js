@@ -53,6 +53,7 @@ router.post("/balance_saldo", CheckBalanceController.getBalanceBySaldo);
 router.post("/balance_filters", CheckBalanceController.getBalancebyFilters);
 
 router.post("/cartera_cxc_cxp", CarteraController.getSaldos_CXC_CXP);
+router.post("/detail_cartera", CarteraController.getCarteraDetails);
 
 //Metodos Put
 router.put("/users/:id", UserController.updateUser);
