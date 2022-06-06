@@ -2,6 +2,10 @@ const InBodega = require("../../database/config/datax-store-config").InBodega;
 const InLinea = require("../../database/config/datax-store-config").InLinea;
 const InGrupo = require("../../database/config/datax-store-config").InGrupo;
 
+exports.connectionTest = async (req, res) => {
+  res.status(200).json("successfully");
+};
+
 exports.getBodegas = async (req, res) => {
   const bodegas = await InBodega.findAll({
     attributes: ["cod_bod", "des_bod"],

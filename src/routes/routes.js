@@ -13,6 +13,9 @@ const CarteraController = require("../controllers/CarteraController");
 const AuxiliarController = require("../controllers/AuxiliarController");
 
 //Metodos Get
+
+router.get("/test", AuxiliarController.connectionTest);
+
 router.get("/users", UserController.getUsers);
 router.get("/users/:id", UserController.getUserById);
 router.get("/user", UserController.searchUser);
